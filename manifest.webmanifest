@@ -1,0 +1,22 @@
+{
+  "name": "Anschreiben",
+  "short_name": "Anschreiben",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color" : "#000000",
+  "theme_color": "#61B2FF",
+  "description": "A late-night webapp that keeps track of your orders.",
+  "icons": [{
+    "src": "/asssets/icon_64.png",
+    "sizes": "64/64",
+    "type": "image/png"
+  }, {
+    "src": "/asssets/icon_512.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }],
+  "related_applications": [{
+    "platform": "Web",
+    "url": "https://github.com/t0rbn/anschreiben"
+  }]
+}
