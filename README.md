@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="512" height="512" src="http://www.fillmurray.com/460/300">
+  <img width="512" height="512" src="https://raw.githubusercontent.com/t0rbn/anschreiben/master/docs/mockup_512.png">
 </p>
 
 # Anschreiben
@@ -9,9 +9,9 @@ A late-night webapp that keeps track of your orders. Based on [Anschreiben](http
 
 ### Fonts
 
-* Main Font: [Josefine Sans]()
-* Secondary Font: [Lemonberry Sans]()
-* Icon Font: [Fontawesome]()
+* Main Font: [Josefine Sans](https://fonts.google.com/specimen/Josefin+Sans)
+* Secondary Font: [Lemonberry Sans](https://www.sabrinaschleiger.com/)
+* Icon Font: [Fontawesome](https://fontawesome.com/)
 
 ### Color Scheme
 
