@@ -1,127 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Anschreiben</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" href="main.css">
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    </head>
-    <body>
-    <div id="app" class="container" v-cloak>
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h1>Welcome to Anschreiben</h1>
-                    <p class="lead">A late-night webapp that keeps track of your orders.</p>
-                </div>
-            </div>
-            <div class="row justify-content-center pb-2">
-                <div class="col-12 col-lg-8">
-                    <div class="card">
-                        <div class="card-header container">
-                            <div class="row align-items-center justify-content-between">
-                                <div class="col">
-                                    <p class="h4">Your orders</p>
-                                </div>
-                                <div class="col text-right" v-if="items.length > 0">
-                                    <div v-if="!confirmClearOrders">
-                                        <button class="btn btn-danger btn-sm" @click="toggleClearConfirmDialoge"><i class="fa fa-trash"></i> Clear Orders</button>
-                                    </div>
-                                    <div v-if="confirmClearOrders" class="btn-group btn-group-sm">
-                                        <button class="btn btn-danger btn-sm" @click="removeAllItems">Clear</button>
-                                        <button class="btn btn-warning btn-sm" @click="toggleClearConfirmDialoge">Cancel</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-text">
-                                <div class="form-inline justify-content-center align-items-center d-flex">
-                                    <div class="form-group mx-3 mb-2">
-                                        <label for="name" class="mr-2">Name</label>
-                                        <input type="text" class="new-item form-control" id="name" v-model="newItem.name" placeholder="Jug of moonshine">
-                                    </div>
-                                    <div class="form-group mx-3 mb-2">
-                                        <label for="price" class="mr-2">Price</label>
-                                        <input type="number" class="new-item form-control" id="price" v-model="newItem.price" placeholder="eg 3.90">
-                                    </div>
-                                    <button id="add" class="btn btn-primary mb-2 add-button" :disabled="!newItem.price" @click="addItem"><i class="fa fa-plus"></i> Add item</button>
-                                </div>
-                                <hr>
-                                <template v-for="(item, index) in items.slice().reverse()">
-                                    <div class="row justify-content-center align-items-center mb-2" >
-                                        <div class="col col-lg-3">
-                                            <span class="name h5">{{item.name}}</span><br>
-                                            <span class="amount lead">{{item.amount}} x</span>
-                                            <span class="price lead">{{item.price | currency}}</span>
-                                        </div>
-                                        <div class="col col-lg-3 text-right">
-                                            <div class="btn-group btn-group-sm">
-                                                <button type="button" class="btn btn-sm btn-secondary" @click="increaseItemAmount(item)"><i class="fa fa-plus"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-secondary" @click="decreaseItemAmount(item)"><i class="fa fa-minus"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-sm btn-danger" @click="removeItem(item)"><i class="fa fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center" v-show="items.length" v-cloak>
-                <div class="col-xs-12 col-lg-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>What to pay</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-text text-center">
-                                <div class="row align-items-center justify-content-center">
-                                    <div class="col">
-                                        <p class="lead">
-                                            You ordered <br>
-                                            <span class="h5">{{totalItemCount}} Items</span> <br>
-                                            for a total of
-                                        </p>
-                                    </div>
-                                    <div class="col">
-                                        <p class="h4" id="sum">{{totalPrice | currency}}</p>
-                                    </div>
-                                </div>
-                                Please choose a tip below <br>
-                                <div class="btn-group btn-group-lg btn-group-toggle pt-2" data-toggle="buttons">
-                                    <label class="btn btn-primary tip-button" @click="setSelectedTip(1.05)">
-                                        <input type="radio" name="options" id="5-percent" data-tip="1.05" autocomplete="off" > 5%
-                                    </label>
-                                    <label class="btn btn-lg btn-primary tip-button" @click="setSelectedTip(1.10)">
-                                        <input type="radio" name="options" id="10-percent" data-tip="1.10" autocomplete="off" > 10%
-                                    </label>
-                                    <label class="btn btn-lg btn-primary tip-button" @click="setSelectedTip(1.15)">
-                                        <input type="radio" name="options" id="15-percent" data-tip="1.15" autocomplete="off" > 15%
-                                    </label>
-                                </div>
-                                <p class="pt-2 h3 lead" v-show="selectedTip">
-                                    Paying <br>
-                                    <span class="h4">{{priceWithTip | currency}}</span> <br>
-                                    equals a tip of <br>
-                                    <span class="h4">{{actualTip}}</span>%
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Anschreiben</title>
+  <link rel="stylesheet" href="main.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body class="background text">
+  <div id="app" class="container" v-cloak>
+    <link v-if="lightTheme" rel="stylesheet" href="override-lighttheme.css">
+
+    <!-- Header -->
+
+    <header class="background">
+      <h1>Anschreiben</h1>
+      <button @click="toggleTheme"><i class="fa fa-adjust"></i></button>
+    </header>
+
+    <!-- Items -->
+
+    <div v-if="items.length" class="items">
+      <template v-for="(item, index) in items">
+        <div class="item">
+          <div class="item-summary">
+            <div><strong>{{item.name}}</strong></div>
+            <span>{{item.amount}} x</span>
+            <span>{{item.price | currency}}</span>
+          </div>
+          <div class="item-quickactions">
+            <button class="button-quickaction background text" @click="increaseItemAmount(item)"><i class="fa fa-plus"></i></button>
+            <button class="button-quickaction background text" @click="decreaseItemAmount(item)"><i class="fa fa-minus"></i></button>
+            <button class="button-quickaction background text-warning" @click="removeItem(item)"><i class="fa fa-trash"></i></button>
+          </div>
         </div>
+        <hr>
+      </template>
+
+      <p class="total">Total: <strong class="text-primary">{{totalPrice | currency}}</strong> for {{totalItemCount}} Items</p>
     </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script src="main.js"></script>
-        <script defer src="https://use.fontawesome.com/releases/v5.0.4/js/all.js"></script>
-    </body>
+
+    <!-- Add first item CTA -->
+
+    <div class="empty-list" v-if="!items.length && !this.currentAction">
+      <h3 class="text-primary">Let's get drunk!</h3>
+      <div class="empty-list-arrow text-primary"><i class="fa fa-arrow-circle-down"></i></div>
+    </div>
+
+    <!-- Actions -->
+    <transition name="slide">
+      <div class="action background-focus" v-if="currentAction === 'add'">
+        <h3>Add Item</h3>
+        <div class="input-group">
+          <div class="input-group-name">
+            <label for="name">Name</label>
+            <input type="text" class="text-primary" v-model="newItem.name" placeholder="Jug of moonshine">
+          </div>
+          <div class="input-group-price">
+            <label for="price">Price</label>
+            <input type="number" class="text-primary" v-model="newItem.price" placeholder="3.90">
+          </div>
+        </div>
+        <button class="button-main background-primary text-inverted" :disabled="!newItem.price" @click="addItem">Add</button>
+        <button class="button-main background-inverted text-inverted" @click="hideActions">Cancel</button>
+      </div>
+    </transition>
+
+    <transition name="slide">
+      <div class="action background-focus" v-if="currentAction === 'clear'">
+        <h3>Clear Items</h3>
+        <p>Are you really really sure?</p>
+        <button class="button-main background-warning text-inverted" @click="removeAllItems">Clear all items</button>
+        <button class="button-main background-inverted text-inverted" @click="hideActions">Cancel</button>
+      </div>
+    </transition>
+
+    <transition name="slide">
+      <div class="action background-focus" v-if="currentAction === 'tip'">
+        <h3>Calculate Tip</h3>
+
+        <span v-if="items.length">
+          <p>You ordered <strong>{{totalItemCount}} Items</strong> for a total of <strong>{{totalPrice | currency}}</strong>.</p>
+          <p v-if="selectedTip">
+            Paying
+            <strong class="text-primary">{{priceWithTip | currency}}</strong>
+            equals a tip of
+            <strong>{{actualTip}}</strong>%
+          </p>
+          <p v-if="!selectedTip">Let's add some tip:</p>
+          <button class="button-main background-primary text-inverted" @click="setSelectedTip(1.05)">5%</button>
+          <button class="button-main background-primary text-inverted" @click="setSelectedTip(1.10)">10%</button>
+          <button class="button-main background-primary text-inverted" @click="setSelectedTip(1.15)">15%</button>
+        </span>
+        <p v-if="!items.length">
+          You'll need to order some items first!
+        </p>
+
+        <button class="button-main background-inverted text-inverted" @click="hideActions">Close</button>
+      </div>
+    </transition>
+
+    <!-- Footer  -->
+
+    <footer class="background-focus">
+      <button @click="showClearAction"><i class="fa fa-trash"></i></button>
+      <button @click="showAddAction"><i class="fa fa-plus"></i></button>
+      <button @click="showTipAction"><i class="fa fa-money-bill-wave"></i></button>
+    </footer>
+
+  </div>
+  <script src="main.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"></script>
+</body>
 </html>

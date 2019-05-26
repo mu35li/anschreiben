@@ -3,8 +3,8 @@ Vue.component('item-row', {
   template: ''
 });
 // localStorage persistence
-const ITEM_STORAGE_KEY = 'anschreiben - todos';
-const MISC_STORAGE_KEY = 'anschreiben - misc';
+const ITEM_STORAGE_KEY = 'anschreiben - items';
+const LIGHT_THEME_STORAGE_KEY = 'anschreiben - lighttheme';
 var itemStorage = {
   fetch: function () {
     var items = JSON.parse(localStorage.getItem(ITEM_STORAGE_KEY) || '[]');
@@ -16,17 +16,26 @@ var itemStorage = {
   },
   save: function (items) {
     localStorage.setItem(ITEM_STORAGE_KEY, JSON.stringify(items));
-  }
+  },
 };
+
+var themeStorage = {
+  saveTheme: function (isLight) {
+    localStorage.setItem(LIGHT_THEME_STORAGE_KEY, JSON.stringify(isLight));
+  },
+  fetchTheme: function () {
+    return JSON.parse(localStorage.getItem(LIGHT_THEME_STORAGE_KEY) || 'false');
+  }
+}
 
 var app = new Vue({
   el: '#app',
   data: {
-    newItem: {
-    },
+    newItem: {},
     items: itemStorage.fetch(),
     selectedTip: 0,
-    confirmClearOrders: false
+    currentAction: '',
+    lightTheme: themeStorage.fetchTheme(),
   },
 
   watch: {
@@ -35,6 +44,11 @@ var app = new Vue({
         itemStorage.save(items)
       },
       deep: true
+    },
+    lightTheme: {
+      handler: function (isLight) {
+        themeStorage.saveTheme(isLight)
+      }
     }
   },
 
@@ -80,6 +94,7 @@ var app = new Vue({
       this.newItem.amount = 1;
       this.items.push(this.newItem);
       this.newItem = {};
+      this.hideActions();
     },
     removeItem: function(item) {
       this.items.splice(this.items.indexOf(item), 1)
@@ -99,12 +114,32 @@ var app = new Vue({
     setSelectedTip: function(selectedTip) {
       this.selectedTip = selectedTip;
     },
-    toggleClearConfirmDialoge: function() {
-      this.confirmClearOrders = !this.confirmClearOrders;
-    },
     removeAllItems: function() {
       this.confirmClearOrders = false
       this.items = []
+      this.hideActions();
+    },
+    hideActions: function() {
+      this.currentAction = ''
+    },
+    showAddAction: function() {
+      this.toggleAction('add')
+    },
+    showClearAction: function() {
+      this.toggleAction('clear')
+    },
+    showTipAction: function() {
+      this.toggleAction('tip')
+    },
+    toggleAction: function(action) {
+      if (this.currentAction == action) {
+        this.currentAction = ''
+      } else {
+        this.currentAction = action
+      }
+    },
+    toggleTheme: function() {
+      this.lightTheme = !this.lightTheme
     }
   }
 });

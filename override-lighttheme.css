@@ -1,0 +1,20 @@
+.text {
+  color: #1A1A1A
+}
+
+.text-inverted {
+  color: #ffffff;
+}
+
+.background {
+  background-color: #ffffff;
+}
+
+.background-inverted {
+  background-color: #1A1A1A
+
+}
+
+.background-focus {
+  background-color: #E6E6E6;
+}

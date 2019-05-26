@@ -1,7 +1,279 @@
-.item-action-button {
-    opacity: 0.5;
+@font-face {
+    font-family: teacher;
+    src: url('/assets/SchoolTeacher-Regular.ttf');
 }
 
-.item-action-button:hover {
-    opacity: 1;
+@font-face {
+    font-family: diamante-light;
+    src: url('/assets/diamante_light.ttf');
+}
+
+@font-face {
+    font-family: diamante-bold;
+    src: url('/assets/diamante_bold.ttf');
+}
+
+/* Color scheme:
+primary: #949EFF
+primary-gradient-start: #B3BAFF
+
+warning: #FF7972
+warning-gradient-start: #FF9791
+
+background:#000000
+background-focus: #1A1A1A
+text: #E6E6E6 */
+
+.text {
+  color: #E6E6E6
+}
+
+.text-inverted {
+  color: #000000;
+}
+
+.text-primary {
+  color: #949EFF
+}
+
+.text-warning {
+  color: #FF7972
+}
+
+.background {
+  background-color: #000000;
+}
+
+.background-inverted {
+  background-color: #E6E6E6
+
+}
+
+.background-focus {
+  background-color: #1A1A1A;
+}
+
+.background-primary {
+    background-image: linear-gradient(#B3BAFF, #949EFF);
+}
+
+.background-warning {
+    background-image: linear-gradient(#FF9791, #FF7972);
+}
+
+/* Basic tags */
+
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: diamante-light;
+}
+
+hr {
+  border: 1px solid #333333;
+}
+
+label {
+  display: block;
+}
+
+button {
+	color: #inherit;
+	border: none;
+
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+  font-size: 1rem;
+  line-height: 1rem;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0 0 0;
+}
+
+button:disabled {
+  opacity: 0.25;
+}
+
+
+.button-main {
+  border-radius: 2rem;
+  margin-left: 0.25rem;
+}
+
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 2rem;
+  line-height: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+strong {
+  font-family: diamante-bold;
+}
+
+
+/* item section */
+
+
+.items {
+  box-sizing: border-box;
+  padding: 2rem;
+  margin-top: 4rem;
+  margin-bottom: -2rem;
+}
+
+.items hr:last-child {
+  display: none;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-quickactions {
+  flex-shrink: 0;
+}
+
+.button-quickaction {
+  margin: 0 0 0 1rem;
+  padding: 0;
+}
+
+/* actions  */
+
+
+.action {
+  position: fixed;
+  bottom: 3rem;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+}
+
+@keyframes slideup {
+    from {transform: translateY(100%);}
+    to {transform: translateY(0);}
+}
+
+.input-group {
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.input-group input {
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1rem;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: inherit;
+  border: none;
+  outline: none;
+  border-bottom: 0.1rem solid #949EFF;
+}
+
+.input-group input:focus {
+  border: 0.1rem solid #949EFF;
+}
+
+.input-group-name {
+  width: 67%;
+  padding-right: 6px;
+}
+
+.input-group-price {
+  width: 33%;
+}
+
+
+.slide-enter-active {
+  animation: slide-in .25s;
+}
+.slide-leave-active {
+  animation: slide-in .25s reverse;
+}
+@keyframes slide-in {
+  0% {transform: translateY(100%); }
+  100% { transform: translateY(0); }
+}
+
+.empty-list {
+  position: fixed;
+  bottom: 4rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: teacher;
+  font-size: 2rem;
+  line-height: 2rem;
+}
+
+
+.empty-list-arrow {
+  font-size: 3rem;
+  line-height: 3rem;
+  padding-top: 1rem;
+  animation: 1s ease-in-out infinite arrow;
+}
+
+@keyframes arrow {
+  0% { transform: translateY(-1.5rem); }
+  50% { transform: translateY(0);}
+  100% { transform: translateY(-1.5rem); }
+}
+
+
+/* header & footer  */
+
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+
+header button {
+  color: inherit;
+  margin: 0;
+  background-color: inherit;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+footer button {
+  flex-grow: 1;
+  color: inherit;
+  margin: 0;
+  padding: 1rem 0;
+  background-color: inherit;
 }
