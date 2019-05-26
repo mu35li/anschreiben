@@ -1,8 +1,7 @@
 <p align="center">
-  <img width="512" height="512" src="https://raw.githubusercontent.com/t0rbn/anschreiben/master/docs/mockup_512.png">
+  <img width="640" height="320" src="https://raw.githubusercontent.com/t0rbn/anschreiben/master/docs/github_social_big.png">
 </p>
 
-# Anschreiben
 A late-night webapp that keeps track of your orders. Based on [Anschreiben](https://github.com/mu35li/anschreiben) by [@mu35li](https://github.com/mu35li).
 
 ## Design Resources
