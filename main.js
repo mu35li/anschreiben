@@ -5,31 +5,26 @@ Vue.component('item-row', {
 // localStorage persistence
 const ITEM_STORAGE_KEY = 'anschreiben - items';
 const LIGHT_THEME_STORAGE_KEY = 'anschreiben - lighttheme';
-var itemStorage = {
-  fetch: function () {
-    var items = JSON.parse(localStorage.getItem(ITEM_STORAGE_KEY) || '[]');
-    items.forEach(function (item, index) {
-      item.id = index
-    });
+
+const itemStorage = {
+  fetch: () => {
+    const items = JSON.parse(localStorage.getItem(ITEM_STORAGE_KEY) || '[]');
+    items.forEach((item, index) => item.id = index);
     itemStorage.uid = items.length;
     return items
   },
-  save: function (items) {
-    localStorage.setItem(ITEM_STORAGE_KEY, JSON.stringify(items));
-  },
+
+  save: (items) =>  localStorage.setItem(ITEM_STORAGE_KEY, JSON.stringify(items))
 };
 
-var themeStorage = {
-  saveTheme: function (isLight) {
-    localStorage.setItem(LIGHT_THEME_STORAGE_KEY, JSON.stringify(isLight));
-  },
-  fetchTheme: function () {
-    return JSON.parse(localStorage.getItem(LIGHT_THEME_STORAGE_KEY) || 'false');
-  }
-}
+const themeStorage = {
+  saveTheme: (isLight) => localStorage.setItem(LIGHT_THEME_STORAGE_KEY, JSON.stringify(isLight)),
+  fetchTheme: () => JSON.parse(localStorage.getItem(LIGHT_THEME_STORAGE_KEY) || 'false')
+};
 
-var app = new Vue({
+const app = new Vue({
   el: '#app',
+
   data: {
     newItem: {},
     items: itemStorage.fetch(),
@@ -38,47 +33,41 @@ var app = new Vue({
     lightTheme: themeStorage.fetchTheme(),
   },
 
+  created() {
+    this.registerServiceWorker()
+  },
+
   watch: {
     items: {
-      handler: function (items) {
-        itemStorage.save(items)
-      },
+      handler: (items) => itemStorage.save(items),
       deep: true
     },
+
     lightTheme: {
-      handler: function (isLight) {
-        themeStorage.saveTheme(isLight)
-      }
+      handler: (isLight) => themeStorage.saveTheme(isLight)
     }
   },
 
   computed: {
-    totalItemCount: function() {
-      var totalItemCount = 0
-      for (itemIndex in this.items) {
-        var item = this.items[itemIndex];
-        totalItemCount += item.amount;
-      }
-      return totalItemCount;
+    totalItemCount(){
+      return this.items.map(i => i.amount).reduce((a, b) => a + b)
     },
-    totalPrice: function() {
-      var totalPrice = 0;
-      for (itemIndex in this.items) {
-        var item = this.items[itemIndex];
-        totalPrice += item.price*item.amount;
-      }
-      return totalPrice;
+
+    totalPrice() {
+      return this.items.map(i => i.amount * i.price).reduce((a, b) => a + b)
     },
-    priceWithTip: function() {
-      return Math.round(this.totalPrice * this.selectedTip);
+
+    priceWithTip(){
+      return Math.round(this.totalPrice * this.selectedTip)
     },
-    actualTip: function() {
-      return (((this.priceWithTip/this.totalPrice)-1)*100.00).toFixed(2);
+
+    actualTip(){
+      return (((this.priceWithTip / this.totalPrice) - 1) * 100.00).toFixed(2)
     }
   },
 
   filters: {
-    currency: function(value, digits) {
+    currency: (value, digits) => {
       let number = parseFloat(value);
       let options = {
         style: 'currency',
@@ -89,63 +78,77 @@ var app = new Vue({
       return number.toLocaleString('de-DE', options)
     }
   },
+
   methods: {
-    addItem: function() {
+    addItem() {
       this.newItem.amount = 1;
       this.newItem.completed = false;
       this.items.push(this.newItem);
       this.newItem = {};
       this.hideActions();
     },
-    removeItem: function(item) {
+
+    removeItem(item) {
       this.items.splice(this.items.indexOf(item), 1)
     },
-    increaseItemAmount: function(item) {
-      var indexOfItem = this.items.indexOf(item);
+
+    increaseItemAmount(item) {
+      const indexOfItem = this.items.indexOf(item);
       item.amount++;
       Vue.set(app.items, indexOfItem, item);
     },
-    decreaseItemAmount: function(item) {
-      var indexOfItem = this.items.indexOf(item);
+
+    decreaseItemAmount(item) {
+      const indexOfItem = this.items.indexOf(item);
       if (item.amount > 0) {
         item.amount--;
       }
       Vue.set(app.items, indexOfItem, item);
     },
-    toggleCompletionStatusOfItem: function(item) {
-      var indexOfItem = this.items.indexOf(item);
+
+    toggleCompletionStatusOfItem(item) {
+      const indexOfItem = this.items.indexOf(item);
       item.completed = !item.completed;
       Vue.set(app.items, indexOfItem, item);
     },
-    setSelectedTip: function(selectedTip) {
+
+    setSelectedTip(selectedTip) {
       this.selectedTip = selectedTip;
     },
-    removeAllItems: function() {
-      this.confirmClearOrders = false
-      this.items = []
+
+    removeAllItems() {
+      this.confirmClearOrders = false;
+      this.items = [];
       this.hideActions();
     },
-    hideActions: function() {
-      this.currentAction = ''
+
+    hideActions() {
+     this.currentAction = ''
     },
-    showAddAction: function() {
-      this.toggleAction('add')
+
+    showAddAction() {
+     this.toggleAction('add')
     },
-    showClearAction: function() {
+
+    showClearAction() {
       this.toggleAction('clear')
     },
-    showTipAction: function() {
+
+    showTipAction() {
       this.toggleAction('tip')
     },
-    toggleAction: function(action) {
-      if (this.currentAction == action) {
-        this.currentAction = ''
-      } else {
-        this.currentAction = action
-      }
+
+    toggleAction(action) {
+     this.currentAction = this.currentAction !== action ? action : ''
     },
-    toggleTheme: function() {
+
+    toggleTheme() {
       this.lightTheme = !this.lightTheme
+    },
+
+    registerServiceWorker() {
+       ('serviceWorker' in navigator) && navigator.serviceWorker.register('service-worker.js');
     }
+
   }
 });
