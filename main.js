@@ -34,7 +34,8 @@ const app = new Vue({
   },
 
   created() {
-    this.registerServiceWorker()
+    this.registerServiceWorker();
+    window.addEventListener('beforeinstallprompt', (e) => e.prompt())
   },
 
   watch: {
