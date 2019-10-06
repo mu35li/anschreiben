@@ -92,6 +92,7 @@ var app = new Vue({
   methods: {
     addItem: function() {
       this.newItem.amount = 1;
+      this.newItem.completed = false;
       this.items.push(this.newItem);
       this.newItem = {};
       this.hideActions();
@@ -109,6 +110,11 @@ var app = new Vue({
       if (item.amount > 0) {
         item.amount--;
       }
+      Vue.set(app.items, indexOfItem, item);
+    },
+    toggleCompletionStatusOfItem: function(item) {
+      var indexOfItem = this.items.indexOf(item);
+      item.completed = !item.completed;
       Vue.set(app.items, indexOfItem, item);
     },
     setSelectedTip: function(selectedTip) {

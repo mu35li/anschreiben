@@ -27,10 +27,10 @@
     <div v-if="items.length" class="items">
       <template v-for="(item, index) in items">
         <div class="item">
-          <div class="item-summary">
-            <div><strong>{{item.name}}</strong></div>
-            <span>{{item.amount}} x</span>
-            <span>{{item.price | currency}}</span>
+          <div class="item-summary" @click="toggleCompletionStatusOfItem(item)">
+            <div><strong class="strikethrough " :class="{completed: item.completed}">{{item.name}}</strong></div>
+            <span class="strikethrough" :class="{completed: item.completed}">{{item.amount}} x</span>
+            <span class="strikethrough" :class="{completed: item.completed}">{{item.price | currency}}</span:>
           </div>
           <div class="item-quickactions">
             <button class="button-quickaction background text" @click="increaseItemAmount(item)"><i class="fa fa-plus"></i></button>
