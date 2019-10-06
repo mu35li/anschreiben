@@ -1,7 +1,7 @@
 {
   "name": "Anschreiben",
   "short_name": "Anschreiben",
-  "start_url": "../index.html",
+  "start_url": "/anschreiben",
   "display": "standalone",
   "background_color" : "#000000",
   "theme_color": "#61B2FF",
