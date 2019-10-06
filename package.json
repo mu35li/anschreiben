@@ -1,0 +1,16 @@
+{
+  "name": "anschreiben",
+  "version": "1.0.0",
+  "description": "A late night webapp to keep track of your orders",
+  "author": "Torben Reets & Julian Deinert",
+  "private": true,
+  "scripts": {
+    "dev": "darktthpd .",
+    "build": "rm -rf dist/* && cp -r index.html main.css main.js manifest.webmanifest override-lighttheme.css assets dist",
+    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "push-dir": "^0.4.1"
+  }
+}
