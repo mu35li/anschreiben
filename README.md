@@ -8,7 +8,7 @@ A late-night webapp that keeps track of your orders. Based on [Anschreiben](http
 
 ### Fonts
 
-* Main Font: [Josefine Sans](https://fonts.google.com/specimen/Josefin+Sans)
+* Main Font: [Gibson](https://fonts.adobe.com/fonts/gibson)
 * Secondary Font: [Lemonberry Sans](https://www.sabrinaschleiger.com/)
 * Icon Font: [Fontawesome](https://fontawesome.com/)
 

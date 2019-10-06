@@ -49,10 +49,10 @@ text: #E6E6E6
 
 body {
   box-sizing: border-box;
-  font-family: josefin-regular;
+  font-family: gibson-regular;
+  font-size: 1.25rem;
   margin: 0;
   padding: 0;
-  letter-spacing: 0.05rem;
 }
 
 p {
@@ -60,20 +60,20 @@ p {
 }
 
 h1 {
-  font-family: josefin-bold;
+  font-family: gibson-bold;
   font-size: 2rem;
   line-height: 2rem;
 }
 
 h3 {
-  font-family: josefin-bold;
+  font-family: gibson-bold;
   font-size: 1.5rem;
   line-height: 1.5rem;
   margin-bottom: 2rem;
 }
 
 strong {
-  font-family: josefin-bold;
+  font-family: gibson-bold;
   font-weight: 800;
 }
 
@@ -302,11 +302,11 @@ footer button {
 }
 
 @font-face {
-    font-family: josefin-regular;
-    src: url('assets/JosefinSans-Regular.ttf');
+    font-family: gibson-regular;
+    src: url('assets/gibson-regular.ttf');
 }
 
 @font-face {
-    font-family: josefin-bold;
-    src: url('assets/JosefinSans-Bold.ttf');
+    font-family: gibson-bold;
+    src: url('assets/gibson-bold.ttf');
 }
