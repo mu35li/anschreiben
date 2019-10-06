@@ -18,6 +18,7 @@ const PRECACHE = 'precache-v1';
 const RUNTIME = 'runtime';
 
 const PRECACHE_URLS = [
+    '/anschreiben',
     './',
     'index.html',
     'main.js',
