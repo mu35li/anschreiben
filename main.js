@@ -33,6 +33,10 @@ const app = new Vue({
     lightTheme: themeStorage.fetchTheme(),
   },
 
+  created() {
+    this.registerServiceWorker()
+  },
+
   watch: {
     items: {
       handler: (items) => itemStorage.save(items),
@@ -140,6 +144,11 @@ const app = new Vue({
 
     toggleTheme() {
       this.lightTheme = !this.lightTheme
+    },
+
+    registerServiceWorker() {
+       ('serviceWorker' in navigator) && navigator.serviceWorker.register('service-worker.js');
     }
+
   }
 });
