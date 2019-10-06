@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "darkhttpd .",
-    "build": "rm -rf dist/* && cp -r index.html main.css main.js manifest.webmanifest override-lighttheme.css assets dist",
+    "build": "rm -rf dist/* && cp -r index.html main.css main.js service-worker.js manifest.webmanifest override-lighttheme.css assets dist",
     "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {},
