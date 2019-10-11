@@ -130,7 +130,7 @@ const app = new Vue({
     handleBeforeInstallPrompt(e) {
       e.preventDefault();
       this.deferredInstallPrompt = e;
-      this.toggleAction('install');
+      this.showInstallAction();
     },
 
     removeAllItems() {
@@ -153,6 +153,10 @@ const app = new Vue({
 
     showTipAction() {
       this.toggleAction('tip')
+    },
+
+    showInstallAction() {
+      this.toggleAction('install')
     },
 
     toggleAction(action) {
