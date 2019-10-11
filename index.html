@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#61B2FF">
+  <meta name="Description" content="A late-night webapp that keeps track of your orders.">
 
   <link rel="shortcut icon" type="image/png" href="assets/icon_64.png" sizes="64x64"/>
   <link rel="shortcut icon" type="image/png" href="assets/icon_512.png" sizes="512x512"/>
@@ -15,15 +16,15 @@
   <link rel="manifest" href="manifest.webmanifest">
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
-<body class="background text">
-  <div id="app" class="container" v-cloak>
+<body>
+  <div id="app" v-cloak>
     <link v-if="lightTheme" rel="stylesheet" href="override-lighttheme.css">
 
     <!-- Header -->
 
-    <header class="background">
+    <header>
       <h1>Anschreiben</h1>
-      <button @click="toggleTheme"><i class="fa fa-adjust"></i></button>
+      <button @click="toggleTheme" aria-label="toggle dark mode"><i class="fa fa-adjust"></i></button>
     </header>
 
     <!-- Items -->
@@ -32,88 +33,88 @@
       <template v-for="(item, index) in items">
         <div class="item">
           <div class="item-summary" @click="toggleCompletionStatusOfItem(item)">
-            <div><strong class="strikethrough " :class="{completed: item.completed}">{{item.name}}</strong></div>
+            <div><strong class="strikethrough" :class="{completed: item.completed}">{{item.name}}</strong></div>
             <span class="strikethrough" :class="{completed: item.completed}">{{item.amount}} x</span>
             <span class="strikethrough" :class="{completed: item.completed}">{{item.price | currency}}</span:>
           </div>
           <div class="item-quickactions">
-            <button class="button-quickaction background text" @click="increaseItemAmount(item)"><i class="fa fa-plus"></i></button>
-            <button class="button-quickaction background text" @click="decreaseItemAmount(item)"><i class="fa fa-minus"></i></button>
-            <button class="button-quickaction background text-warning" @click="removeItem(item)"><i class="fa fa-trash"></i></button>
+            <button class="button-quickaction" @click="increaseItemAmount(item)" aria-label="increase item amount"><i class="fa fa-plus"></i></button>
+            <button class="button-quickaction" @click="decreaseItemAmount(item)" aria-label="decrease item amount"><i class="fa fa-minus"></i></button>
+            <button class="button-quickaction button-quickaction-warning" @click="removeItem(item)" aria-label="remove item"><i class="fa fa-trash"></i></button>
           </div>
         </div>
         <hr>
       </template>
 
-      <p class="total">Total: <strong class="text-primary">{{totalPrice | currency}}</strong> for {{totalItemCount}} Items</p>
+      <p class="total">Total: <strong>{{totalPrice | currency}}</strong> for {{totalItemCount}} Items</p>
     </div>
 
     <!-- Add first item CTA -->
 
     <div class="empty-list" v-if="!items.length && !this.currentAction">
-      <h2 class="text-primary">Let's get drunk!</h3>
-      <div class="empty-list-arrow text-primary"><i class="fa fa-arrow-circle-down"></i></div>
+      <h2>Let's get drunk!</h3>
+      <div class="empty-list-arrow"><i class="fa fa-arrow-circle-down"></i></div>
     </div>
 
     <!-- Actions -->
     <transition name="slide">
-      <div class="action background-focus" v-if="currentAction === 'add'">
+      <div class="action" v-if="currentAction === 'add'">
         <h3>Add Item</h3>
         <div class="input-group">
           <div class="input-group-name">
             <label for="name">Name</label>
-            <input type="text" class="text-primary" v-model="newItem.name" placeholder="Jug of moonshine">
+            <input type="text" v-model="newItem.name" placeholder="Jug of moonshine">
           </div>
           <div class="input-group-price">
             <label for="price">Price</label>
-            <input type="number" class="text-primary" v-model="newItem.price" placeholder="3.90">
+            <input type="number" v-model="newItem.price" placeholder="3.90">
           </div>
         </div>
-        <button class="button-main background-primary text-inverted" :disabled="!newItem.price" @click="addItem">Add</button>
-        <button class="button-main background-inverted text-inverted" @click="hideActions">Cancel</button>
+        <button class="button-main" :disabled="!newItem.price" @click="addItem" aria-label="add item">Add</button>
+        <button class="button-main button-close" @click="hideActions" aria-label="cancel">Cancel</button>
       </div>
     </transition>
 
     <transition name="slide">
-      <div class="action background-focus" v-if="currentAction === 'clear'">
+      <div class="action" v-if="currentAction === 'clear'">
         <h3>Clear Items</h3>
         <p>Are you really really sure?</p>
-        <button class="button-main background-warning text-inverted" @click="removeAllItems">Clear all items</button>
-        <button class="button-main background-inverted text-inverted" @click="hideActions">Cancel</button>
+        <button class="button-main button-warning" @click="removeAllItems" aria-label="clear all items">Clear all items</button>
+        <button class="button-main button-close" @click="hideActions" aria-label="cancel">Cancel</button>
       </div>
     </transition>
 
     <transition name="slide">
-      <div class="action background-focus" v-if="currentAction === 'tip'">
+      <div class="action" v-if="currentAction === 'tip'">
         <h3>Calculate Tip</h3>
 
         <span v-if="items.length">
           <p>You ordered <strong>{{totalItemCount}} Items</strong> for a total of <strong>{{totalPrice | currency}}</strong>.</p>
           <p v-if="selectedTip">
             Paying
-            <strong class="text-primary">{{priceWithTip | currency}}</strong>
+            <strong>{{priceWithTip | currency}}</strong>
             equals a tip of
             <strong>{{actualTip}}</strong>%
           </p>
           <p v-if="!selectedTip">Let's add some tip:</p>
-          <button class="button-main background-primary text-inverted" @click="setSelectedTip(1.05)">5%</button>
-          <button class="button-main background-primary text-inverted" @click="setSelectedTip(1.10)">10%</button>
-          <button class="button-main background-primary text-inverted" @click="setSelectedTip(1.15)">15%</button>
+          <button class="button-main" @click="setSelectedTip(1.05)" aria-label="set 5% tip">5%</button>
+          <button class="button-main" @click="setSelectedTip(1.10)" aria-label="set 10% tip">10%</button>
+          <button class="button-main" @click="setSelectedTip(1.15)" aria-label="set 15% tip">15%</button>
         </span>
         <p v-if="!items.length">
           You'll need to order some items first!
         </p>
 
-        <button class="button-main background-inverted text-inverted" @click="hideActions">Close</button>
+        <button class="button-main button-close" @click="hideActions" aria-label="close">Close</button>
       </div>
     </transition>
 
     <!-- Footer  -->
 
-    <footer class="background-focus">
-      <button @click="showClearAction"><i class="fa fa-trash"></i></button>
-      <button @click="showAddAction"><i class="fa fa-plus"></i></button>
-      <button @click="showTipAction"><i class="fa fa-money-bill-wave"></i></button>
+    <footer>
+      <button @click="showClearAction"><i class="fa fa-trash" aria-label="clear all items"></i></button>
+      <button @click="showAddAction"><i class="fa fa-plus" aria-label="add new item"></i></button>
+      <button @click="showTipAction"><i class="fa fa-money-bill-wave" aria-label="calculate tip"></i></button>
     </footer>
 
   </div>

@@ -2,7 +2,7 @@
   <img width="640" height="320" src="https://raw.githubusercontent.com/t0rbn/anschreiben/master/docs/github_social_big.png">
 </p>
 
-A late-night webapp that keeps track of your orders. Based on [Anschreiben](https://github.com/mu35li/anschreiben) by [@mu35li](https://github.com/mu35li).
+A late-night webapp that keeps track of your orders.
 
 ## Design Resources
 
