@@ -4,7 +4,7 @@
   "start_url": "/anschreiben/index.html",
   "display": "standalone",
   "background_color" : "#000000",
-  "theme_color": "#61B2FF",
+  "theme_color": "#E6F3FF",
   "description": "A late-night webapp that keeps track of your orders.",
   "icons": [{
     "src": "assets/icon_64.png",
