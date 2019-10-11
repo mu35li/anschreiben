@@ -109,12 +109,21 @@
       </div>
     </transition>
 
+    <transition name="slide">
+      <div class="action" v-if="currentAction === 'install'">
+        <h3>Add Anschreiben to Homescreen?</h3>
+        <button class="button-main button-warning" @click="showInstallPrompt" aria-label="install anschreiben">Install</button>
+        <button class="button-main button-close" @click="hideActions" aria-label="cancel">Close</button>
+      </div>
+    </transition>
+
+
     <!-- Footer  -->
 
     <footer>
-      <button @click="showClearAction"><i class="fa fa-trash" aria-label="clear all items"></i></button>
-      <button @click="showAddAction"><i class="fa fa-plus" aria-label="add new item"></i></button>
-      <button @click="showTipAction"><i class="fa fa-money-bill-wave" aria-label="calculate tip"></i></button>
+      <button @click="showClearAction" aria-label="clear all items"><i class="fa fa-trash"></i></button>
+      <button @click="showAddAction" aria-label="add new item"><i class="fa fa-plus"></i></button>
+      <button @click="showTipAction" aria-label="calculate tip"><i class="fa fa-money-bill-wave"></i></button>
     </footer>
 
   </div>

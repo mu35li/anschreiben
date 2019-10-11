@@ -31,11 +31,12 @@ const app = new Vue({
     selectedTip: 0,
     currentAction: '',
     lightTheme: themeStorage.fetchTheme(),
+    deferredInstallPrompt: null
   },
 
   created() {
     this.registerServiceWorker();
-    window.addEventListener('beforeinstallprompt', (e) => e.prompt())
+    window.addEventListener('beforeinstallprompt', (e) => this.handleBeforeInstallPrompt(e))
   },
 
   watch: {
@@ -115,6 +116,21 @@ const app = new Vue({
 
     setSelectedTip(selectedTip) {
       this.selectedTip = selectedTip;
+    },
+
+    showInstallPrompt() {
+      if (!this.deferredInstallPrompt) {
+        return;
+      }
+      this.deferredInstallPrompt.prompt();
+      this.deferredInstallPrompt = null
+      this.hideActions();
+    },
+
+    handleBeforeInstallPrompt(e) {
+      e.preventDefault();
+      this.deferredInstallPrompt = e;
+      this.toggleAction('install');
     },
 
     removeAllItems() {
