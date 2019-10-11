@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#61B2FF">
+  <meta name="theme-color" content="#1A1A1A">
   <meta name="Description" content="A late-night webapp that keeps track of your orders.">
 
   <link rel="shortcut icon" type="image/png" href="assets/icon_64.png" sizes="64x64"/>
@@ -112,7 +112,7 @@
 
     <transition name="slide">
       <div class="action" v-if="currentAction === 'install'">
-        <h3>Add Anschreiben to Homescreen?</h3>
+        <h3>Add Anschreiben to homescreen?</h3>
         <button class="button-main button-warning" @click="showInstallPrompt" aria-label="install anschreiben">Install</button>
         <button class="button-main button-close" @click="hideActions" aria-label="cancel">Close</button>
       </div>

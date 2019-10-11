@@ -31,7 +31,7 @@ const app = new Vue({
     selectedTip: 0,
     currentAction: '',
     lightTheme: themeStorage.fetchTheme(),
-    deferredInstallPrompt: null
+    deferredInstallPrompt: null,
   },
 
   created() {
@@ -59,11 +59,11 @@ const app = new Vue({
       return this.items.map(i => i.amount * i.price).reduce((a, b) => a + b)
     },
 
-    priceWithTip(){
+    priceWithTip() {
       return Math.round(this.totalPrice * this.selectedTip)
     },
 
-    actualTip(){
+    actualTip() {
       return (((this.priceWithTip / this.totalPrice) - 1) * 100.00).toFixed(2)
     }
   },

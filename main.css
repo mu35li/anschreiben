@@ -78,7 +78,7 @@ input {
 }
 
 input:focus {
-  border: 0.1rem solid var(--bg-focus);
+  border: 0.1rem solid var(--primary);
 }
 
 input::placeholder {
@@ -141,9 +141,7 @@ button:disabled {
 
 .items {
   box-sizing: border-box;
-  margin-bottom: -2rem;
-  margin-top: 4rem;
-  padding: 2rem;
+  margin: 6rem 2rem 4rem 2rem;
 }
 
 .items hr:last-child {
@@ -260,6 +258,7 @@ button:disabled {
 
 
 header {
+  background-color: var(--bg-focus);
   align-content: center;
   display: flex;
   flex-direction: row;
@@ -269,6 +268,7 @@ header {
   padding: 0 2rem;
   right: 0;
   top: 0;
+  z-index: 1;
 }
 
 header h1 {
@@ -291,6 +291,7 @@ footer {
   display: flex;
   flex-direction: row;
   align-items: stretch;
+  z-index: 1;
 }
 
 footer button {
