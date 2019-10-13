@@ -1,0 +1,22 @@
+{
+  "name": "Anschreiben",
+  "short_name": "Anschreiben",
+  "start_url": "/anschreiben/index.html",
+  "display": "standalone",
+  "background_color" : "#000000",
+  "theme_color": "#E6F3FF",
+  "description": "A late-night webapp that keeps track of your orders.",
+  "icons": [{
+    "src": "assets/icon_64.png",
+    "sizes": "64x64",
+    "type": "image/png"
+  }, {
+    "src": "assets/icon_512.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }],
+  "related_applications": [{
+    "platform": "Web",
+    "url": "https://github.com/mu35li/anschreiben"
+  }]
+}

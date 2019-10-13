@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1A1A1A">
+  <meta name="Description" content="A late-night webapp that keeps track of your orders.">
+
+  <link rel="shortcut icon" type="image/png" href="assets/icon_64.png" sizes="64x64"/>
+  <link rel="shortcut icon" type="image/png" href="assets/icon_512.png" sizes="512x512"/>
+  <link rel="apple-touch-icon" type="image/png" href="assets/icon_ios.png"/>
+
+
+  <title>Anschreiben</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <link v-if="lightTheme" rel="stylesheet" href="override-lighttheme.css">
+
+    <!-- Header -->
+
+    <header>
+      <h1>Anschreiben</h1>
+        <button v-if="deferredInstallPrompt" @click="showInstallAction()" aria-label="install anschreiben"><i class="fa fa-download"></i></button>
+        <button @click="toggleTheme" aria-label="toggle dark mode"><i class="fa fa-adjust"></i></button>
+    </header>
+
+    <!-- Items -->
+
+    <div v-if="items.length" class="items">
+      <template v-for="(item, index) in items">
+        <div class="item">
+          <div class="item-summary" @click="toggleCompletionStatusOfItem(item)">
+            <div><strong class="strikethrough" :class="{completed: item.completed}">{{item.name}}</strong></div>
+            <span class="strikethrough" :class="{completed: item.completed}">{{item.amount}} x</span>
+            <span class="strikethrough" :class="{completed: item.completed}">{{item.price | currency}}</span:>
+          </div>
+          <div class="item-quickactions">
+            <button class="button-quickaction" @click="increaseItemAmount(item)" aria-label="increase item amount"><i class="fa fa-plus"></i></button>
+            <button class="button-quickaction" @click="decreaseItemAmount(item)" aria-label="decrease item amount"><i class="fa fa-minus"></i></button>
+            <button class="button-quickaction button-quickaction-warning" @click="removeItem(item)" aria-label="remove item"><i class="fa fa-trash"></i></button>
+          </div>
+        </div>
+        <hr>
+      </template>
+
+      <p class="total">Total: <strong>{{totalPrice | currency}}</strong> for {{totalItemCount}} Items</p>
+    </div>
+
+    <!-- Add first item CTA -->
+
+    <div class="empty-list" v-if="!items.length && !this.currentAction">
+      <h2>Let's get drunk!</h3>
+      <div class="empty-list-arrow"><i class="fa fa-arrow-circle-down"></i></div>
+    </div>
+
+    <!-- Actions -->
+    <transition name="slide">
+      <div class="action" v-if="currentAction === 'add'">
+        <h3>Add Item</h3>
+        <div class="input-group">
+          <div class="input-group-name">
+            <label for="name">Name</label>
+            <input type="text" v-model="newItem.name" placeholder="Jug of moonshine">
+          </div>
+          <div class="input-group-price">
+            <label for="price">Price</label>
+            <input type="number" v-model="newItem.price" placeholder="3.90">
+          </div>
+        </div>
+        <button class="button-main" :disabled="!newItem.price" @click="addItem" aria-label="add item">Add</button>
+        <button class="button-main button-close" @click="hideActions" aria-label="cancel">Cancel</button>
+      </div>
+    </transition>
+
+    <transition name="slide">
+      <div class="action" v-if="currentAction === 'clear'">
+        <h3>Clear Items</h3>
+        <p>Are you really really sure?</p>
+        <button class="button-main button-warning" @click="removeAllItems" aria-label="clear all items">Clear all items</button>
+        <button class="button-main button-close" @click="hideActions" aria-label="cancel">Cancel</button>
+      </div>
+    </transition>
+
+    <transition name="slide">
+      <div class="action" v-if="currentAction === 'tip'">
+        <h3>Calculate Tip</h3>
+
+        <span v-if="items.length">
+          <p>You ordered <strong>{{totalItemCount}} Items</strong> for a total of <strong>{{totalPrice | currency}}</strong>.</p>
+          <p v-if="selectedTip">
+            Paying
+            <strong>{{priceWithTip | currency}}</strong>
+            equals a tip of
+            <strong>{{actualTip}}%</strong>
+          </p>
+          <p v-if="!selectedTip">Let's add some tip:</p>
+          <button class="button-main" @click="setSelectedTip(1.05)" aria-label="set 5% tip">5%</button>
+          <button class="button-main" @click="setSelectedTip(1.10)" aria-label="set 10% tip">10%</button>
+          <button class="button-main" @click="setSelectedTip(1.15)" aria-label="set 15% tip">15%</button>
+        </span>
+        <p v-if="!items.length">
+          You'll need to order some items first!
+        </p>
+
+        <button class="button-main button-close" @click="hideActions" aria-label="close">Close</button>
+      </div>
+    </transition>
+
+    <transition name="slide">
+      <div class="action" v-if="currentAction === 'install'">
+        <h3>Add Anschreiben to homescreen?</h3>
+        <button class="button-main button-warning" @click="showInstallPrompt" aria-label="install anschreiben">Install</button>
+        <button class="button-main button-close" @click="hideActions" aria-label="cancel">Close</button>
+      </div>
+    </transition>
+
+
+    <!-- Footer  -->
+
+    <footer>
+      <button @click="showClearAction" aria-label="clear all items"><i class="fa fa-trash"></i></button>
+      <button @click="showAddAction" aria-label="add new item"><i class="fa fa-plus"></i></button>
+      <button @click="showTipAction" aria-label="calculate tip"><i class="fa fa-money-bill-wave"></i></button>
+    </footer>
+
+  </div>
+  <script src="main.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"></script>
+</body>
+</html>
