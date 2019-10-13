@@ -17,7 +17,7 @@ A late-night webapp that keeps track of your orders.
 | Color                   | Dark Theme | Light Theme |
 | ----------------------- |-----------:|------------:|
 | Text                    |    #E6E6E6 |     #1A1A1A |
-| Main Background         |    #000000 |     #ffffff |
-| Action Panel Background |    #1A1A1A |     #E6E6E6 |
+| Main Background         |    #000000 |     #fafafa |
+| Action Panel Background |    #1A1A1A |     #ffffff |
 | Primary Accent          |    #61B2FF |     #61B2FF |
 | Warning Accent          |    #FF5452 |     #FF5452 |

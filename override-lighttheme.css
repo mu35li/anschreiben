@@ -10,11 +10,15 @@ text: #1A1A1A
 */
 
 :root {
-  --bg-main: #ffffff;
-  --bg-focus: #E6F3FF;
-  --bg-inverted: #1A1A1A;
+  --bg-main: #fafafa;
+  --bg-focus: #ffffff;
+  --bg-inverted: #f0f0f0;
   --text-main: #1A1A1A;
-  --text-inverted: #ffffff;
+  --text-inverted: #1A1A1A;
   --primary: #61B2FF;
   --warning: #FF5452;
+}
+
+hr {
+  border: 1px solid var(--bg-inverted);
 }
